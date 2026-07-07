@@ -7,6 +7,8 @@ const carouselTrack = document.querySelector(".carousel__track");
 const carouselCards = document.querySelectorAll(".testimonial-card");
 const buttons = document.querySelectorAll(".btn-ripple");
 const accordionItems = document.querySelectorAll(".accordion details");
+const navLinks = document.querySelectorAll(".nav-links a");
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
 const setHeaderState = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 10);
@@ -25,6 +27,19 @@ navWrap?.querySelectorAll("a").forEach((link) => {
     navWrap.classList.remove("is-open");
     navToggle.setAttribute("aria-expanded", "false");
   });
+});
+
+navLinks.forEach((link) => {
+  const linkPage = new URL(link.getAttribute("href"), window.location.href).pathname.split("/").pop() || "index.html";
+  const isActive = linkPage === currentPage;
+
+  link.classList.toggle("is-active", isActive);
+
+  if (isActive) {
+    link.setAttribute("aria-current", "page");
+  } else {
+    link.removeAttribute("aria-current");
+  }
 });
 
 const observer = new IntersectionObserver(
